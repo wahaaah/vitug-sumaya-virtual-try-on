@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Website</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Contact</a>
+    <a href="#" onclick="showTerms()">Terms &amp; Conditions</a> <!-- Added terms button -->
+  </div>
+
+  <!-- Grid Layout -->
+  <div class="grid-container">
+    <div class="grid-item">
+      <p>Grid Item 1</p>
+      <button onclick="showTerms()">Button 1</button>
+    </div>
+    <div class="grid-item">
+      <p>Grid Item 2</p>
+      <button onclick="showTerms()">Button 2</button>
+    </div>
+    <div class="grid-item">
+      <p>Grid Item 3</p>
+      <button onclick="showTerms()">Button 3</button>
+    </div>  
+    <div class="grid-item">
+      <p>Grid Item 4</p>
+      <button onclick="showTerms()">Button 4</button>
+    </div>
+    <div class="grid-item">
+      <p>Grid Item 5</p>
+      <button onclick="showTerms()">Button 5</button>
+    </div>
+    <div class="grid-item">
+      <p>Grid Item 6</p>
+      <button onclick="showTerms()">Button 6</button>
+    </div>  
+  </div>
+
+  <!-- The Modal -->
+  <div id="termsModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Terms and Conditions</h2>
+      <p>These are the terms and conditions for our website.</p>
+      <button class="agree-button" onclick="agree()">I Agree</button> <!-- Agree Button -->
+    </div>
+  </div>
+  <video id="video" width="600" height="450" autoplay></video>
+
+  <script defer src="face-api.min.js"></script>
+  <script defer src="script.js"></script>
+  <script src="sample.js"></script>
+  <script src="virtual.js"></script>
+
+</body>
+</html>
