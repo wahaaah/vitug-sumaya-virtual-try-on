@@ -1,41 +1,61 @@
-const video = document.getElementById("video");
-
-
-
-function startWebcam() {
-  navigator.mediaDevices
-    .getUserMedia({
-      video: true,
-      audio: false,
-    })
-    .then((stream) => {
-      video.srcObject = stream;
-    })
-    .catch((error) => {
-      console.error(error);
+  // JavaScript for Virtual Try-On
+  async function setupWebcam() {
+    const video = document.getElementById('video');
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    video.srcObject = stream;
+    return new Promise((resolve) => {
+        video.onloadedmetadata = () => {
+            resolve(video);
+        };
     });
 }
 
-startWebcam ();
+async function detectFace(video) {
+    const canvas = document.getElementById('overlayCanvas');
+    const context = canvas.getContext('2d');
+    await faceapi.nets.tinyFaceDetector.loadFromUri('/models'); // Load models from face-api.js
+    const result = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions());
+    return result;
+}
 
-video.addEventListener("play", () => {
-  const canvas = faceapi.createCanvasFromMedia(video);
-  document.body.append(canvas);
-  faceapi.matchDimensions(canvas, { height: video.height, width: video.width });
+async function renderGlassesOnFace(face) {
+    const canvas = document.getElementById('overlayCanvas');
+    const context = canvas.getContext('2d');
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+    renderer.setSize(canvas.width, canvas.height);
 
-  setInterval(async () => {
-    const detections = await faceapi
-      .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
-      .withFaceLandmarks();
+    const scene = new THREE.Scene();
 
-    const resizedDetections = faceapi.resizeResults(detections, {
-      height: video.height,
-      width: video.width,
+    const loader = new THREE.GLTFLoader();
+    loader.load('C:\website\model\sample.gltf', (gltf) => {
+        const glassesModel = gltf.scene.children[0];
+        scene.add(glassesModel);
+
+        // Position and scale the glasses model based on the detected face
+        // You'll need to adjust these values based on your 3D model and the detected face
+        glassesModel.position.set(0, 0, -100);
+        glassesModel.scale.set(10, 10, 10);
     });
-    canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
-    faceapi.draw.drawDetections(canvas, resizedDetections);
-    faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
 
-    console.log(detections);
-  }, 100);
-});
+    const camera = new THREE.PerspectiveCamera(
+        75, canvas.width / canvas.height, 0.1, 1000
+    );
+    camera.position.z = 100;
+
+    function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+    }
+    animate();
+}
+
+async function main() {
+    await setupWebcam();
+    const video = document.getElementById('video');
+    const face = await detectFace(video);
+    if (face) {
+        await renderGlassesOnFace(face);
+    }
+}
+
+main();
