@@ -3,31 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Try-On</title>
-<link rel="stylesheet" href="style.css">
+    <title>Document</title>
+    <style>
+        canvas{
+            position: absolute;
+        }
+    </style>
 </head>
 <body>
-    <h1>Virtual Try-On</h1>
-
-    <!-- Webcam Video Feed -->
-    <video id="video" autoplay></video>
     
-    <!-- Canvas for rendering virtual items -->
-    <div id="tryOnArea">
-        <canvas id="overlayCanvas"></canvas>
-    </div>
-
-    <!-- TensorFlow.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-
-    <!-- Face-API.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection"></script>
-    <script src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
-
-    <!-- Three.js -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
-
- 
-    <script src="virtual.js"></script>
+   
 </body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script defer src="./face-api.min.js"></script>
+<script defer src="./scripts.js" type="module"></script>
 </html>
+
